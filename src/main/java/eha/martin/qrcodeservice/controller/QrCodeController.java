@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class QrCodeController {
 
     @GetMapping("/health")
-    @ResponseStatus(HttpStatus.OK)
-    public void getHealth() {}
+    public ResponseEntity<String> getHealth() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Service is up and running");
+    }
 
     @GetMapping("/qrcode")
-    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
-    public void getQrCode() {}
-
+    public ResponseEntity<String> getQRCode() {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+                .body("Not implemented yet");
+    }
 }
