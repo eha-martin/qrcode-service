@@ -1,5 +1,0 @@
-###
-GET localhost:8080/api/health
-###
-GET localhost:8080/api/qrcode
-###
