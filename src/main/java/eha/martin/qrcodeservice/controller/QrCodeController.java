@@ -35,10 +35,11 @@ public class QrCodeController {
 
     @GetMapping(value = "/qrcode")
     public ResponseEntity<BufferedImage> getQRCode(
-            @RequestParam @NotBlank String contents,
-            @RequestParam @Range(min = 150, max = 350, message = "Image size must be between 150 and 350 pixels") int size,
-            @RequestParam @Pattern(regexp = "png|jpeg|gif", message = "Only png, jpeg and gif image types are supported") String type) {
-        BufferedImage image = qrCodeService.generateQRCode(contents, size);
+            @RequestParam @NotBlank(message = "Contents cannot be null or blank") String contents,
+            @RequestParam(defaultValue = "250") @Range(min = 150, max = 350, message = "Image size must be between 150 and 350 pixels") int size,
+            @RequestParam(defaultValue = "L") @Pattern(regexp = "[LMQH]", message = "Permitted error correction levels are L, M, Q, H") String correction,
+            @RequestParam(defaultValue = "png") @Pattern(regexp = "png|jpeg|gif", message = "Only png, jpeg and gif image types are supported") String type) {
+        BufferedImage image = qrCodeService.generateQRCode(contents, correction,size);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("image/" + type))
                 .body(image);

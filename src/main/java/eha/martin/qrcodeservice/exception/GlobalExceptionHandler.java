@@ -28,10 +28,18 @@ public class GlobalExceptionHandler {
                 .filter(msg -> msg.contains("Image size"))
                 .findFirst();
 
+
+        Optional<String> correctionError = ex.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .filter(msg -> msg.contains("Permitted error correction"))
+                .findFirst();
+
         if (contentError.isPresent()) {
             errors.put("error", contentError.get());
         } else if (sizeError.isPresent()) {
             errors.put("error", sizeError.get());
+        } else if (correctionError.isPresent()) {
+            errors.put("error", correctionError.get());
         } else {
             ex.getConstraintViolations().stream()
                     .map(ConstraintViolation::getMessage)
