@@ -1,6 +1,7 @@
 package eha.martin.qrcodeservice.controller;
 
 import eha.martin.qrcodeservice.service.QrCodeService;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,10 @@ public class QrCodeController {
 
     @GetMapping(value = "/qrcode")
     public ResponseEntity<BufferedImage> getQRCode(
+            @RequestParam @NotBlank String contents,
             @RequestParam @Range(min = 150, max = 350, message = "Image size must be between 150 and 350 pixels") int size,
             @RequestParam @Pattern(regexp = "png|jpeg|gif", message = "Only png, jpeg and gif image types are supported") String type) {
-        BufferedImage image = qrCodeService.generateQRCode(size);
+        BufferedImage image = qrCodeService.generateQRCode(contents, size);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("image/" + type))
                 .body(image);
