@@ -1,6 +1,6 @@
 # QR Code Service
 
-This project is a QR code generation service built with Spring Boot and ZXing. The development was carried out by following the requirements provided by [Hyperskill.org](https://hyperskill.org/):, fulfilling each specification.
+This project is a QR code generation service built with Spring Boot and ZXing. The development was carried out by following the requirements provided by [Hyperskill.org](https://hyperskill.org/), fulfilling each specification.
 
 ## Description
 
@@ -31,7 +31,6 @@ The project was completed by following the requirements provided by [Hyperskill.
 
 `GET /api/qrcode?contents=HelloWorld`
 
-
 **Response:**
 
 This will return a PNG image of a QR code with the content "HelloWorld", size 250x250, and error correction level "L".
@@ -41,7 +40,6 @@ This will return a PNG image of a QR code with the content "HelloWorld", size 25
 **HTTP GET Request:**
 
 `GET /api/qrcode?contents=HelloWorld&size=300&correction=M`
-
 
 **Response:**
 
