@@ -1,6 +1,6 @@
 # QR Code Service
 
-This project is a QR code generation service built with Spring Boot and ZXing. The development was carried out by following the requirements provided by [Hyperskill.org](https://hyperskill.org/), fulfilling each specification.
+This project is a QR code generation service built with Spring Boot and [ZXing](https://github.com/zxing/zxing), which is licensed under the Apache License 2.0. The development was carried out by following the requirements provided by [Hyperskill.org](https://hyperskill.org/), fulfilling each specification.
 
 ## Description
 
