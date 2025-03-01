@@ -18,33 +18,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleValidationExceptions(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        Optional<String> contentError = ex.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
-                .filter(msg -> msg.contains("Contents cannot be null or blank"))
-                .findFirst();
+        String[] priorityKeywords = {
+                "Contents",
+                "size",
+                "correction",
+                "types"
+        };
 
-        Optional<String> sizeError = ex.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
-                .filter(msg -> msg.contains("Image size"))
-                .findFirst();
-
-
-        Optional<String> correctionError = ex.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
-                .filter(msg -> msg.contains("Permitted error correction"))
-                .findFirst();
-
-        if (contentError.isPresent()) {
-            errors.put("error", contentError.get());
-        } else if (sizeError.isPresent()) {
-            errors.put("error", sizeError.get());
-        } else if (correctionError.isPresent()) {
-            errors.put("error", correctionError.get());
-        } else {
-            ex.getConstraintViolations().stream()
+        for (String keyword : priorityKeywords) {
+            Optional<String> error = ex.getConstraintViolations().stream()
                     .map(ConstraintViolation::getMessage)
-                    .findFirst()
-                    .ifPresent(msg -> errors.put("error", msg));
+                    .filter(msg -> msg.contains(keyword))
+                    .findFirst();
+
+            if (error.isPresent()) {
+                errors.put("error", error.get());
+                break;
+            }
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
